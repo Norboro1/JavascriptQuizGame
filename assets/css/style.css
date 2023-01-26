@@ -30,6 +30,10 @@ main div{
     margin: 50px 50px 0 50px;
 }
 
+#highScores {
+    display: inline;
+}
+
 #wrong, #correct {
     font-size: 3.5ex;
     font-style: italic;
@@ -108,4 +112,10 @@ input[type=text]:focus {
 
 form button {
     margin-left: 20px;
+}
+
+ul li {
+    padding: 10px;
+    margin: 5px 0;
+    background-color: rgb(167, 168, 228);
 }

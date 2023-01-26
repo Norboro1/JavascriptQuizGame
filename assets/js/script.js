@@ -34,6 +34,11 @@ var formEl = $("#endScreen");
 var scoreEl = $("#score");
 var wrongEl = $("#wrong");
 var correctEl = $("#correct");
+var highScoresEl = $("#highScores");
+var highScoresListEl = $("#highScoresList");
+var refreshButton = $("#refresh");
+var clearScoresButton = $("#clearScores");
+var showHighScoresLink = $("#showHighScores");
 
 var highScores = JSON.parse(localStorage.getItem('highScores'));
 
@@ -41,6 +46,31 @@ var timer;
 var timeLeft = 60;
 var correct = 0;
 var questionNum = 0;
+
+function compareScore(a, b){
+    return b.score - a.score;
+}
+
+function hideAll(){
+    startDivEl.hide();
+    questionDivEl.hide();
+    highScoresEl.hide();
+    formEl.hide();
+    wrongEl.hide();
+    correctEl.hide();
+}
+
+function renderHighScores(){
+    highScores.sort(compareScore);
+    for(i in highScores){
+        var scoreLineEl = $("<li>");
+        i++;
+        scoreLineEl.text(i-- + ". " + highScores[i].initials + " - " + highScores[i].score);
+        highScoresListEl.append(scoreLineEl);
+    }
+
+    highScoresEl.show();
+}
 
 function loadQuestion(x){
     questionDivEl.empty();
@@ -73,6 +103,15 @@ startButtonEl.on('click', function(){
     timer = setInterval(function(){
         if(timeLeft <= 0){
             clearInterval(timer);
+            questionDivEl.empty();
+            questionDivEl.hide();
+            $("button").css('min-width', '0px');
+            scoreEl.text(correct.toString());
+            formEl.show();
+            setTimeout(function(){
+                wrongEl.hide();
+                correctEl.hide();
+        }   , 1000);
         }
         timerDisplayEl.text(timeLeft.toString());
         timeLeft -=1;
@@ -125,10 +164,29 @@ formEl.on('click', 'button', function(event){
         highScores = [highScore];
     }
     
+    formEl.hide();
+
     localStorage.setItem('highScores', JSON.stringify(highScores));
+    renderHighScores();
 });
 
-questionDivEl.hide();
-formEl.hide();
-wrongEl.hide();
-correctEl.hide();
+refreshButton.on('click', function(){
+    location.reload();
+});
+
+clearScoresButton.on('click', function(){
+    highScores = [];
+    localStorage.clear('highScores');
+    highScoresListEl.empty();
+});
+
+showHighScoresLink.on('click', function(event){
+    event.preventDefault();
+    clearInterval(timer);
+    hideAll();
+    highScoresListEl.empty();
+    renderHighScores();
+})
+
+hideAll();
+startDivEl.show();

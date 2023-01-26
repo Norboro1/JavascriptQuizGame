@@ -11,7 +11,7 @@
 
   <body>
     <header>
-        <a href="#">View high scores</a>
+        <a href="" id="showHighScores">View high scores</a>
         <p>Time: <span id="timerDisplay">0</span></p>
     </header>
     <main>
@@ -33,7 +33,13 @@
                 <button>Submit</button>
             </form>
         </div>
-        <div id="highScores"></div>
+        <div id="highScores">
+            <h1>High scores</h1>
+            <ul id="highScoresList">
+            </ul>
+            <button id="refresh">Go back</button>
+            <button id="clearScores">Clear high scores</button>
+        </div>
         <div id = "wrong"> Wrong! </div>
         <div id = "correct"> Correct! </div>
     </main>
