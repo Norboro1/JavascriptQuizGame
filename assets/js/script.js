@@ -35,6 +35,8 @@ var scoreEl = $("#score");
 var wrongEl = $("#wrong");
 var correctEl = $("#correct");
 
+var highScores = JSON.parse(localStorage.getItem('highScores'));
+
 var timer;
 var timeLeft = 60;
 var correct = 0;
@@ -97,8 +99,10 @@ questionDivEl.on('click', 'button', function (){
     if(questionNum < questions.length){
         loadQuestion(questionNum);
     } else {
+        clearInterval(timer);
         questionDivEl.empty();
         questionDivEl.hide();
+        $("button").css('min-width', '0px');
         scoreEl.text(correct.toString());
         formEl.show();
         setTimeout(function(){
@@ -107,6 +111,21 @@ questionDivEl.on('click', 'button', function (){
         }, 1000);
     }
     
+});
+
+formEl.on('click', 'button', function(event){
+    event.preventDefault();
+    var highScore = {
+        initials: $("#initials").val(),
+        score: correct
+    }
+    if(highScores != null){
+        highScores.push(highScore);
+    } else {
+        highScores = [highScore];
+    }
+    
+    localStorage.setItem('highScores', JSON.stringify(highScores));
 });
 
 questionDivEl.hide();
