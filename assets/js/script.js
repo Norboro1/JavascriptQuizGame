@@ -30,8 +30,14 @@ var timerDisplayEl = $("#timerDisplay");
 var startButtonEl = $("#startButton");
 var startDivEl = $("#start");
 var questionDivEl = $("#questionDiv");
+var formEl = $("#endScreen");
+var scoreEl = $("#score");
+var wrongEl = $("#wrong");
+var correctEl = $("#correct");
 
 var timer;
+var timeLeft = 60;
+var correct = 0;
 var questionNum = 0;
 
 function loadQuestion(x){
@@ -44,7 +50,7 @@ function loadQuestion(x){
     var buttonWidth = 0;
         for (i in questions[x].choices) {
             var choicesButton = $("<button>");
-            choicesButton.addClass("button"+i);
+            choicesButton.attr('data-choice-value', i);
             i++;
             choicesButton.text(i-- + ". " + questions[x].choices[i]);
             questionDivEl.append(choicesButton);
@@ -58,12 +64,9 @@ function loadQuestion(x){
     
             buttonWidth = choicesButton.outerWidth();
         }
-    
-    questionNum++;
 }
 
 startButtonEl.on('click', function(){
-    var timeLeft = 60;
     clearInterval(timer);
     timer = setInterval(function(){
         if(timeLeft <= 0){
@@ -80,7 +83,33 @@ startButtonEl.on('click', function(){
 });
 
 questionDivEl.on('click', 'button', function (){
-    loadQuestion(questionNum);
+    wrongEl.hide();
+    correctEl.hide();
+    if(this.dataset.choiceValue == questions[questionNum].answer ){
+        correct+=20;
+        correctEl.show();
+    } else {
+        timeLeft-= 10;
+        wrongEl.show();
+    }
+
+    questionNum++;
+    if(questionNum < questions.length){
+        loadQuestion(questionNum);
+    } else {
+        questionDivEl.empty();
+        questionDivEl.hide();
+        scoreEl.text(correct.toString());
+        formEl.show();
+        setTimeout(function(){
+            wrongEl.hide();
+            correctEl.hide();
+        }, 1000);
+    }
+    
 });
 
 questionDivEl.hide();
+formEl.hide();
+wrongEl.hide();
+correctEl.hide();

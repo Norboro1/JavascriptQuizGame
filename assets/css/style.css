@@ -15,8 +15,11 @@ header a {
 
 main {
     display: flex;
+    flex-direction: column;
     height: 100%;
-    justify-content: center;
+    width: 100%;
+    justify-content: flex-start;
+    align-items: center;
 }
 
 main div{
@@ -25,6 +28,15 @@ main div{
     align-items: flex-start;
     width: 60%;
     margin: 50px;
+}
+
+#wrong, #correct {
+    font-size: 3.5ex;
+    font-style: italic;
+    color: rgb(160, 160, 160);
+    margin-top: 0;
+    padding: 10px;
+    border-top: solid rgb(160, 160, 160) 1px;
 }
 
 h1 {
@@ -36,10 +48,13 @@ h1 {
     align-self: center;
 }
 
-p {
+main p, label {
     font-size: 3.5ex;
-    text-align: center;
     margin: 20px 0 20px 0;
+}
+
+#start p {
+    text-align: center;
 }
 
 button {
@@ -67,4 +82,30 @@ button:hover {
 
 button:active {
     background-color: rgb(73, 22, 116);
+}
+
+form {
+    display: flex;
+    width: 100%;
+    align-items: center;
+}
+
+input[type=text] {
+    all:unset;
+    width: 50%;
+    padding: 5px 10px;
+    height: 3ex;
+    border-radius: 0px;
+    border: solid black 1px;
+    margin: 0 20px;
+    align-self: center;
+}
+
+input[type=text]:focus {
+    border-radius: 0px;
+    border: solid 2px rgb(104, 196, 226);
+  }
+
+form button {
+    margin-left: 20px;
 }

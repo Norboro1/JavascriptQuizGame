@@ -21,8 +21,21 @@
             <button id="startButton">Start Quiz</button>
         </div>
         <div id="questionDiv">
-            
+
         </div>
+        <div id="endScreen">
+            <h1>All done!</h1>
+            <p>Your final score is <span id="score"></span></p>
+            <form>
+                <label for="initials">Enter Initials: </label>
+                <input type="text" name="initials">
+                
+                <button id="submitScore">Submit</button>
+            </form>
+        </div>
+        <div id="highScores"></div>
+        <div id = "wrong"> Wrong! </div>
+        <div id = "correct"> Correct! </div>
     </main>
     <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
 	<script src="assets/js/script.js"></script>
