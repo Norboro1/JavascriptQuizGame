@@ -72,30 +72,35 @@ function renderHighScores(){
     highScoresEl.show();
 }
 
-function loadQuestion(x){
+function loadRandomQuestion(){
     questionDivEl.empty();
+
+    var x = Math.floor(Math.random() * questions.length);
+    questionNum = x;
 
     var questionEl = $("<h1>");
     questionEl.text(questions[x].question);
     questionDivEl.append(questionEl);
 
     var buttonWidth = 0;
-        for (i in questions[x].choices) {
-            var choicesButton = $("<button>");
-            choicesButton.attr('data-choice-value', i);
-            i++;
-            choicesButton.text(i-- + ". " + questions[x].choices[i]);
-            questionDivEl.append(choicesButton);
-            if(buttonWidth != 0){
-                if (choicesButton.outerWidth() > buttonWidth){
-                    $("button").css('min-width', choicesButton.outerWidth()+'px');
-                } else {
-                    $("button").css('min-width', buttonWidth+'px');
-                }
+    for (i in questions[x].choices) {
+        var choicesButton = $("<button>");
+        choicesButton.attr('data-choice-value', i);
+        i++;
+        choicesButton.text(i-- + ". " + questions[x].choices[i]);
+        questionDivEl.append(choicesButton);
+        if(buttonWidth != 0){
+            if (choicesButton.outerWidth() > buttonWidth){
+                $("button").css('min-width', choicesButton.outerWidth()+'px');
+            } else {
+                $("button").css('min-width', buttonWidth+'px');
             }
-    
-            buttonWidth = choicesButton.outerWidth();
         }
+    
+        buttonWidth = choicesButton.outerWidth();
+    }
+
+    
 }
 
 startButtonEl.on('click', function(){
@@ -120,12 +125,13 @@ startButtonEl.on('click', function(){
     startDivEl.hide();
     questionDivEl.show();
 
-    loadQuestion(0);
+    loadRandomQuestion();
 });
 
 questionDivEl.on('click', 'button', function (){
     wrongEl.hide();
     correctEl.hide();
+    console.log(questionNum + " / " + this.dataset.choiceValue + " / " + questions[questionNum].answer);
     if(this.dataset.choiceValue == questions[questionNum].answer ){
         correct+=20;
         correctEl.show();
@@ -134,9 +140,10 @@ questionDivEl.on('click', 'button', function (){
         wrongEl.show();
     }
 
-    questionNum++;
-    if(questionNum < questions.length){
-        loadQuestion(questionNum);
+    questions.splice(questionNum, 1);
+
+    if(questions.length > 0){
+        loadRandomQuestion();
     } else {
         clearInterval(timer);
         questionDivEl.empty();
@@ -149,13 +156,12 @@ questionDivEl.on('click', 'button', function (){
             correctEl.hide();
         }, 1000);
     }
-    
 });
 
 formEl.on('click', 'button', function(event){
     event.preventDefault();
     var highScore = {
-        initials: $("#initials").val(),
+        initials: $("#initials").val().toUpperCase(),
         score: correct
     }
     if(highScores != null){
