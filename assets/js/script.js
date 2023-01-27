@@ -47,7 +47,7 @@ var highScores = JSON.parse(localStorage.getItem('highScores'));
 
 //declare variables for timer, number of correct answers, and global questionNumber to track which question player is on.
 var timer;
-var timeLeft = 60;
+var timeLeft = 59;
 var correct = 0;
 var correctInterval = 100/questions.length;
 var questionNum = 0;
@@ -125,11 +125,10 @@ function loadRandomQuestion(){
 startButtonEl.on('click', function(){
     clearInterval(timer);
     //set timer for game. at 0 will stop timer and render final score screen.
-    timerDisplayEl.text(timeLeft.toString());
+    timerDisplayEl.text('60');
     timer = setInterval(function(){
         if(timeLeft <= 0){
             clearInterval(timer);
-            timerDisplayEl.text('0');
             questionDivEl.empty();
             questionDivEl.hide();
             //This line clears the min-width property that was set to make all question buttons equal size.
@@ -142,8 +141,8 @@ startButtonEl.on('click', function(){
                 correctEl.hide();
         }   , 1000);
         }
-        timeLeft -=1;
         timerDisplayEl.text(timeLeft.toString());
+        timeLeft -=1;
     }, 1000);
 
     //renders question div and loads a random question.
