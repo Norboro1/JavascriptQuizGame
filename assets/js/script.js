@@ -125,6 +125,7 @@ function loadRandomQuestion(){
 startButtonEl.on('click', function(){
     clearInterval(timer);
     //set timer for game. at 0 will stop timer and render final score screen.
+    timerDisplayEl.text(timeLeft.toString());
     timer = setInterval(function(){
         if(timeLeft <= 0){
             clearInterval(timer);
@@ -140,8 +141,8 @@ startButtonEl.on('click', function(){
                 correctEl.hide();
         }   , 1000);
         }
-        timerDisplayEl.text(timeLeft.toString());
         timeLeft -=1;
+        timerDisplayEl.text(timeLeft.toString());
     }, 1000);
 
     //renders question div and loads a random question.
