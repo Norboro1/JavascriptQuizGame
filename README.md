@@ -1,4 +1,4 @@
-A quiz game to test your Javascript skills!
+A quiz game to test your Javascript knowledge!
 
 visit here: https://norboro1.github.io/JavascriptQuizGame/
 
