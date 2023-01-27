@@ -129,6 +129,7 @@ startButtonEl.on('click', function(){
     timer = setInterval(function(){
         if(timeLeft <= 0){
             clearInterval(timer);
+            timerDisplayEl.text('0');
             questionDivEl.empty();
             questionDivEl.hide();
             //This line clears the min-width property that was set to make all question buttons equal size.
